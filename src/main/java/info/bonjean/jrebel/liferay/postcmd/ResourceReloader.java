@@ -43,13 +43,23 @@ import org.zeroturnaround.javarebel.ServletIntegrationFactory;
 
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 
+/**
+ * 
+ * @author Julien Bonjean <julien@bonjean.info>
+ * 
+ * TODO: do not use a singleton, associate one weak instance per portlet
+ * TODO: add support for unregister on portlet undeploy
+ * 
+ */
 public class ResourceReloader implements FileEventListener
 {
 	private static final Logger log = LoggerFactory.getLogger(ResourceReloader.class.getName());
 	private static final String COMMAND = System.getProperty("user.home") + "/.jrebel/lr_post_cmd.sh";
 	private static final int CMD_DELAY = 1000;
 
+	// TODO: use a weak instance (WeakUtil.weak)
 	private static ResourceReloader instance;
+
 	private final ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(1);
 	private final HashSet<String> registeredContexts = new HashSet<String>();
 	private ScheduledFuture<?> scheduledFuture;
@@ -79,7 +89,8 @@ public class ResourceReloader implements FileEventListener
 
 	private void execute()
 	{
-		// this mechanism is used to prevent the command to be executed too many times if multiple resources are modified
+		// this mechanism is used to prevent the command to be executed too many times if multiple resources are
+		// modified
 		if (scheduledFuture != null)
 			scheduledFuture.cancel(false);
 		scheduledFuture = scheduledThreadPool.schedule(executor, CMD_DELAY, TimeUnit.MILLISECONDS);
@@ -90,6 +101,7 @@ public class ResourceReloader implements FileEventListener
 		super();
 
 		// monitor portlet classes
+		// TODO: move to the plugin preinit
 		ReloaderFactory.getInstance().addClassReloadListener(new ClassEventListener()
 		{
 			@Override

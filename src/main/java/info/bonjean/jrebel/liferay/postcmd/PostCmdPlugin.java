@@ -22,6 +22,11 @@ import org.zeroturnaround.javarebel.Integration;
 import org.zeroturnaround.javarebel.IntegrationFactory;
 import org.zeroturnaround.javarebel.Plugin;
 
+/**
+ * 
+ * @author Julien Bonjean <julien@bonjean.info>
+ * 
+ */
 public class PostCmdPlugin implements Plugin
 {
 	public void preinit()

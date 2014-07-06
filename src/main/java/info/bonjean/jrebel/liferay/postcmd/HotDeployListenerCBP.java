@@ -21,9 +21,13 @@ import org.zeroturnaround.bundled.javassist.ClassPool;
 import org.zeroturnaround.bundled.javassist.CtClass;
 import org.zeroturnaround.javarebel.integration.support.JavassistClassBytecodeProcessor;
 
+/**
+ * 
+ * @author Julien Bonjean <julien@bonjean.info>
+ * 
+ */
 public class HotDeployListenerCBP extends JavassistClassBytecodeProcessor
 {
-
 	public void process(ClassPool classPool, ClassLoader classLoader, CtClass ctClass) throws Exception
 	{
 		classPool.importPackage("org.zeroturnaround.javarebel");
